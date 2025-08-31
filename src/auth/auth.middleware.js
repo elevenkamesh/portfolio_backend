@@ -10,7 +10,7 @@ export const authenticate = (req, res, next) => {
   if (!token) return res.status(401).json({ error: "No token provided" });
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: "Invalid token" });
+    if (err) return res.status(403).json({ status : false , error: "Invalid token" });
     req.user = user;
     next();
   });
@@ -19,7 +19,7 @@ export const authenticate = (req, res, next) => {
 export const authorize = (role) => {
   return (req, res, next) => {
     if (req.user.role !== role) {
-      return res.status(403).json({ error: "Forbidden: insufficient role" });
+      return res.status(403).json({ status : false ,  error: "Forbidden: insufficient role" });
     }
     next();
   };

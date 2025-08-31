@@ -5,13 +5,13 @@ class AuthController {
     try {
       const { email, password } = req.body;
       if (!email || !password) {
-        return res.status(400).json({ error: "Email and password are required" });
+        return res.status(400).json({ status : false , error: "Email and password are required" });
       }
 
       const result = AuthService.login(email, password);
-      res.json({ message: "Login successful", ...result });
+      res.json({ status : true  , message: "Login successful", ...result });
     } catch (error) {
-      res.status(401).json({ error: error.message });
+      res.status(401).json({ error: error.message , status : false});
     }
   }
 }
